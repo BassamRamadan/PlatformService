@@ -1,6 +1,19 @@
 @PlatformService_HostAddress = http://localhost:5154
 
-GET {{PlatformService_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{PlatformService_HostAddress}}/api/platforms
 
 ###
+Get {{PlatformService_HostAddress}}/api/platforms/4
+
+###
+POST {{PlatformService_HostAddress}}/api/platforms
+Content-Type: application/json
+
+{
+  "name": "Test Platform",
+  "publisher": "Test Publisher",
+  "cost": "Free"
+}
+
+###
+DELETE {{PlatformService_HostAddress}}/api/platforms/4
