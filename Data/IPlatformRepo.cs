@@ -3,10 +3,10 @@ namespace PlatformService.Data
 {
     public interface IPlatformRepo
     {
-        IEnumerable<Platform> GetAllPlatforms();
-        Platform? GetPlatformById(int id);
-        void CreatePlatform(Platform platform);
-        void DeletePlatform(int id);
-        bool SaveChanges();
+        Task<IEnumerable<Platform>> GetAllPlatforms();
+        Task<Platform?> GetPlatformById(int id);
+        Task CreatePlatform(Platform platform);
+        Task DeletePlatform(int id);
+        Task<bool> SaveChanges();
     }
 }

@@ -20,16 +20,16 @@ namespace PlatformService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<PlatformReadDto>> GetAllPlatforms()
+        public async Task<ActionResult<IEnumerable<PlatformReadDto>>> GetAllPlatforms()
         {
-            var platforms = _repository.GetAllPlatforms();
+            var platforms = await _repository.GetAllPlatforms();
             return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platforms));
         }
 
         [HttpGet("{id}", Name = "GetPlatformById")]
-        public ActionResult<PlatformReadDto> GetPlatformById(int id)
+        public async Task<ActionResult<PlatformReadDto>> GetPlatformById(int id)
         {
-            var platform = _repository.GetPlatformById(id);
+            var platform = await _repository.GetPlatformById(id);
             if (platform == null)
             {
                 return NotFound();
@@ -38,21 +38,21 @@ namespace PlatformService.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto platformCreateDto)
+        public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformCreateDto)
         {
             var platform = _mapper.Map<Platform>(platformCreateDto);
-            _repository.CreatePlatform(platform);
-            _repository.SaveChanges();
+            await _repository.CreatePlatform(platform);
+            await _repository.SaveChanges();
 
             var platformReadDto = _mapper.Map<PlatformReadDto>(platform);
             return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id }, platformReadDto);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeletePlatform(int id)
+        public async Task<ActionResult> DeletePlatform(int id)
         {
-            _repository.DeletePlatform(id);
-            if (!_repository.SaveChanges())
+            await _repository.DeletePlatform(id);
+            if (!await _repository.SaveChanges())
             {
                 return BadRequest();
             }
